@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="calendarBoyContest">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/../calendarBoy" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="datique">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/../datique" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="theClipboard">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/../theClipboard" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="youVote">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/../youVote" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

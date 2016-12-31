@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta property="og:image" content="http://goBudget.toscors2.com/img/possibleFavIcon2.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Your Budget On the Go" />
+
+    <title>goBudget</title>
+    <link rel="stylesheet" href="lib/css/styles.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+
+</head>
+<body>
+
+<div id='pageContainer' class="centerObject">
+
+    <div id='quickEntryHeader' class='fullWidth header' style=''>
+        <div id='budgetLeft' style='height:50%; top:50%;'>
+            <h1 class='center'>Daily Left</h1>
+            <p id='displayDailyBudget' class='center'></p>
+        </div>
+        <div id='processButton' class='noMargin' style='top:50%;'>
+            <p>$ Coming: <span id='moneyComing'></span></p>
+            <p>$ Going: <span id='billsComing'>0</span></p>
+            <p>$ Gone: <span id='billsDue'>0</span></p>
+            <!--<p>To File: <span id='numItemsUnprocessed'>0</span></p>-->
+        </div>
+    </div>
+
+    <div class='contentDiv'>
+        <div id='qeScreen' class='content'>
+            <form id="qeForm" name="quickEntryForm" method="post" action="">
+                <label for="transDate" class="ui-hidden-accessible hidden">
+                    Entry
+                    Date: </label><input id="transDate" class='centerObject' type="text" name="transDate"
+                                         placeholder="Today" style="width:200px" />
+                <label class='fullWidth'>
+                    <select name='receipt'>
+                        <option value='y'>I Have A Receipt</option>
+                        <option value='n'>Do Not Have Receipt</option>
+                    </select>
+                </label><br>
+                <label class='fullWidth'>
+                    <select name='category'>
+                        <option value='pers'>Personal</option>
+                        <option value='hous'>Household</option>
+                        <option value='bsns'>Business</option>
+                    </select>
+                </label><br>
+                <label class='fullWidth'>
+                    <select id='tender' name='tender'>
+                        <option value='cash'>Cash</option>
+                        <option value='boa'>BOA - 1533</option>
+                        <option value='paypal'>PayPal - 6642</option>
+                        <option value='td'>TD - 4362</option>
+                        <option value='netspend'>NetSpend - 2614</option>
+                        <option value='skylight'>Skylight - 5130</option>
+                        <option value='ebt'>EBT - 2577</option>
+                    </select>
+                </label><br>
+                <label class='fullWidth'>
+                    <select name='type'>
+                        <option value='exp'>Expense</option>
+                        <option value='inc'>Income</option>
+                        <option value='tips'>Tip Income</option>
+                        <option value='transfer'>Transfer</option>
+                    </select>
+                </label><br>
+
+                <div class="center centerObject ninetyWidth topTen relative block pad5">
+                    <label><input id="amount" name="amount" type="tel" style="width:80%; height:50px;"
+                                  placeholder="Enter Amount" autocomplete='off' /></label>
+                </div>
+                <input id="submitQuickEntry" class='bigSubmit centerObject' name="submitQuickEntry" type="submit"
+                       value="Submit Entry" style="width:200px; height:50px" />
+            </form>
+        </div>
+
+        <div id='filterOption' class='content hidden'>
+            <div style='width:100%; text-align:center;'>
+                <h1>Choose Item Filter</h1>
+                <form id='filterOptions' name='filterOptions' method='post' action=''>
+                    <label>
+                        <select name='filterOption'>
+                            <option value='uReceipt'>View UnProcessed Items With Receipt</option>
+                            <option value='uNoReceipt'>View Unprocessed Items Without Receipt</option>
+                            <option value='uAll'>View All UnProcessed Transactions</option>
+                        </select>
+                    </label>
+                    <input type='submit' name='submitFilter' id='submitFilter' class='bigSubmit'
+                           value='Filter Transactions' />
+                </form>
+            </div>
+
+            <div style='width:100%; text-align:center; margin-top:25px;'>
+                <button id='processWhole'>
+                    Process Entire Transaction
+                </button>
+            </div>
+
+
+        </div>
+
+        <div id='processScreen' class='content hidden' style='overflow:auto;'></div>
+
+        <div id='processPopup' class='content hidden' style='overflow:auto;'></div>
+
+        <div id='differenceDiv' data-id='null' data-source='null' class='popup hidden center'>
+            <div id='differenceDetails' class='difference' style='width:100%; height:20%;'>
+                <p id='' style='font-weight: bolder;'>There's A Difference of <span id='difference'></span></p>
+            </div>
+            <div id='misc' class='differenceOption difference' style='width:100%; height:20%;'><p>Add Difference As Misc
+                Item</p></div>
+            <div id='tax' class='differenceOption difference' style='width:100%; height:20%;'><p>Add Difference As Sales
+                Tax</p></div>
+            <div id='update' class='differenceOption difference' style='width:100%; height:20%;'><p>Update Transaction
+                Amount</p></div>
+            <div id='edit' class='differenceOption difference' style='width:100%; height:20%;'><p>Edit Items</p></div>
+
+        </div>
+
+        <div id='transferDiv' class='popup hidden center'>
+            <form id='transferForm' name='transferForm' method='post' action=''>
+                <label><select id='transferTender' name='transferTender'>
+
+                </select></label>
+                <input type='submit' name='submitTransfer' id='submitTransfer' value='Submit Transfer' />
+
+            </form>
+        </div>
+
+        <div id='reconcileBalances' class='content hidden center'></div>
+
+        <div id='reportScreen' class='content hidden center'></div>
+
+        <div id='miscPopup' class='content hidden center'></div>
+
+    </div>
+
+    <div id='footer' style='position:fixed; width:100%; height:10%; bottom:0; background-color:orangered;'>
+        <div id="qeOption" class='footerMenu fifthWidth whiteTxt activeFooter'>
+            <p>Quick <br> Entry</p>
+        </div>
+        <div id="processOption" class='footerMenu fifthWidth whiteTxt'>
+            <p>Process <br><span id='numItemsUnprocessed'>0</span></p>
+        </div>
+        <div id="cfgOption" class='footerMenu fifthWidth whiteTxt'>
+            <p>Config <br> Income</p>
+        </div>
+        <div id="balanceOption" class='footerMenu fifthWidth whiteTxt'>
+            <p>Reconcile<br>Balances</p>
+        </div>
+        <div id="reportOption" class='footerMenu fifthWidth whiteTxt'>
+            <p>View<br>Reports</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="lib/myScript.js"></script>
+</body>
+</html>

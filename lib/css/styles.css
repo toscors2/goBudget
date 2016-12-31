@@ -1,0 +1,392 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100vh;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    overflow-x: hidden;
+    font-family: sans-serif;
+}
+
+select, .bigSubmit, option {
+    width: 100%;
+    height: 70px;
+    text-align: center;
+}
+
+.lineItemBtn {
+    height:30px;
+}
+
+.reconcileBtn {
+    height: 30px;
+}
+
+option {
+    font-size: x-large;
+    padding: 20px;
+}
+
+h1, p {
+    margin: 0;
+}
+
+input, label {
+    width: 95%;
+}
+
+#pageContainer {
+    width: 80%;
+    max-width: 400px;
+    height: 95%;
+    background-color: lightseagreen;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5%;
+    box-shadow: 0 2px 2px 0 black;
+}
+
+.iName {
+    overflow:hidden;
+    white-space: nowrap;
+}
+
+.catDiv {
+    width: 90%;
+    left: 5%;
+    position: relative;
+}
+
+.catPopBtn {
+    width: 25%;
+    float: left;
+    font-size: xx-small;
+}
+
+.catLabel, .catTotal {
+    width:50%;
+    float:left;
+    height:20px;
+}
+
+.catLine {
+    height:20px;
+}
+
+.catLabel {
+    text-align: left;
+}
+
+.catTotal {
+    text-align: right;
+}
+
+.famDiv {
+    height: 60px;
+}
+
+.periodLine {
+    width: 100%;
+    height: 50px;
+}
+
+.period {
+    width: 50%;
+    float: left;
+    text-align: center;
+    height: 50px;
+}
+
+.timePeriod {
+    width: 50%;
+    float: left;
+    text-align: center;
+    height: 50px;
+    padding-top: 10px;
+}
+
+.periodSummaryDiv {
+    border-top: 1px solid black;
+    height:40px;
+}
+
+.periodHeader {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.periodSummaryLabels, .periodSummaryTotals {
+    height: 20px;
+
+}
+
+.periodSummary {
+    width:33%;
+    float:left;
+
+}
+
+#budgetLeft {
+    left: 0;
+    width: 70%;
+    height: auto;
+    background-color: lightgreen;
+    opacity: .8;
+    position: absolute;
+}
+
+#processButton {
+    top: 0;
+    left: 70%;
+    height: 50%;
+    width: 30%;
+    background-color: blue;
+    position: absolute;
+    font-size: small;
+}
+
+#processPopup {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.processEntry {
+    border-radius: 10%;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    box-shadow: 0 1px 1px 0 black;
+    border: 1px solid gray;
+}
+
+.header {
+    height: 20%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 20;
+
+}
+
+.contentDiv {
+    top: 20%;
+    width: 100%;
+    height: 70%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+}
+
+.footerMenu {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    border: 1px dashed grey;
+    border-radius: .31425em;
+    height: 100%;
+}
+
+.popup {
+    width: 80%;
+    left: 10%;
+    top:25px;
+    background-color: white;
+    border: 1px solid blue;
+    position: relative;
+    z-index: 9999;
+    display: none;
+}
+
+.differenceOption p {
+    position: relative;
+}
+
+.differenceOption {
+    background-color: aqua;
+    border: 1px solid black;
+}
+
+.difference {
+    height: 40px;
+}
+
+.hidden {
+    display: none;
+}
+
+.centerObject {
+    margin-left: 50%;
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+    /*margin:0 auto;*/
+    /*position:absolute;*/
+}
+
+.center {
+    text-align: center;
+}
+
+.topTen {
+    margin-top: 10px;
+}
+
+.blackBG {
+    background-color: black;
+}
+
+.ltBlueBG {
+    background-color: lightblue;
+}
+
+.whiteTxt {
+    color: white;
+}
+
+.high75 {
+    height: 75px;
+}
+
+.relative {
+    position: relative;
+}
+
+.block {
+    display: inline-block;
+}
+
+.qeBtn {
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.lineItem {
+    height: 40px;
+    width: 95%;
+    background-color: silver;
+    border: 1px solid black;
+    margin: 5px;
+    position: relative;
+}
+
+.hiddenLineItemDiv {
+    height: auto;
+    overflow-x: hidden;
+}
+
+.processInfo {
+    overflow-x: hidden;
+}
+
+.shownLineItemDiv {
+    height: 100%;
+}
+
+#lineItemFormBtns {
+    width: 50%;
+    height: 40%;
+    left: 50%;
+    top: 55%;
+    position: absolute;
+}
+
+.afSourceLine {
+    width: 80%;
+    left: 10%;
+    position: relative;
+    height: 25px;
+    border: 1px solid yellow;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.afSourceBox {
+    font-family: sans-serif;
+    font-size: large;
+    width: 40%;
+    left: 30%;
+    height: auto;
+    position: relative;
+    text-align: center;
+    background-color: blue;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px black;
+}
+
+.pad5 {
+    padding: 5px;
+}
+
+.pad2 {
+    padding: 2px;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.halfWidth {
+    width: 50%;
+    /*float: left;*/
+}
+
+.thirdWidth {
+    width: 33.33%;
+    /*float: left;*/
+}
+
+.fifthWidth {
+    width: 20%;
+    float: left;
+}
+
+.quarterWidth {
+    width: 25%;
+    float: left;
+}
+
+.ninetyWidth {
+    width: 90%;
+}
+
+.Lfloat {
+    float: left;
+}
+
+.noMargin {
+    margin: 0;
+}
+
+.activeFooter {
+    background-color: yellow;
+    color: blue;
+}
+
+.quarterHeight {
+    height: 25%;
+}

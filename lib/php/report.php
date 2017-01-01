@@ -57,9 +57,9 @@
      */
     function getTrans($conn, $periods) {
         $getTrans = $conn->prepare("
-SELECT a.amount, a.transDate, a.type, b.itemQty, b.itemPrice, b.itemCategory, d.familyName FROM budget.quickEntry AS a 
+SELECT a.amount, a.transDate, a.type, b.iQty, b.iPrice, b.iCategory, d.familyName FROM budget.quickEntry AS a 
 LEFT JOIN budget.lineItems AS b ON a.transID = b.transID
-LEFT JOIN budget.categories AS c ON b.itemCategory = c.catName
+LEFT JOIN budget.categories AS c ON b.iCategory = c.catName
 LEFT JOIN budget.family AS d ON c.catFamily = d.familyID
 WHERE a.processed = 'y' && c.report = 'y'
 ORDER BY a.transDate, c.catName");
@@ -211,7 +211,7 @@ ORDER BY a.transDate, c.catName");
                     $catTotal = number_format(($catExp + $catInc), 2, '.', ',');
                     
                     if(isset($_SESSION['report'][$period][$famName]['exp'][$catName])) {
-                        $data['hiddenHTML'] .= "<div class='catLine'><div class='catLabel'>" . $catName . "</div><div class='catTotal'> " .
+                        $data['hiddenHTML'] .= "<div data-period='".$period."' data-category='".$catName."'  class='catLine'><div class='catLabel'>" . $catName . "</div><div class='catTotal'> " .
                                                $catTotal .
                                                "</div></div>";
                     }

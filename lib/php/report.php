@@ -7,50 +7,6 @@
 
     include('../cfg/connect.php');
 
-    function setStartEnd() {
-        $today = new DateTime(date('Y-m-d 0:0:0'));
-
-        $today->format('l') != 'Saturday' ?
-            $_SESSION['wtdStart'] = new DateTime(date('Y-m-d 0:0:0', strtotime('last Saturday')))
-            : $_SESSION['wtdStart'] = $today;
-        $today->format('l') != 'Friday' ?
-            $_SESSION['wtdEnd'] = new DateTime(date('Y-m-d 23:59:59', strtotime('next Friday')))
-            : $_SESSION['wtdEnd'] = $today;
-
-        $quarter = ceil($today->format('m') / 3);
-
-        switch($quarter) {
-            case 1:
-                $qtdStart = (date('Y-m-d 0:0:0', strtotime('January 1')));
-                break;
-            case 2:
-                $qtdStart = date('Y-m-d 0:0:0', strtotime('April 1'));
-                break;
-            case 3:
-                $qtdStart = date('Y-m-d 0:0:0', strtotime('July 1'));
-                break;
-            case 4:
-                $qtdStart = date('Y-m-d 0:0:0', strtotime('October 1'));
-                break;
-            default:
-                $qtdStart = null;
-                $qtdEnd = null;
-                break;
-        }
-
-        $_SESSION['qtdEnd'] = new DateTIme (date('Y-m-t 23:59:59', strtotime($qtdStart . " +2 months")));
-        $_SESSION['qtdStart'] = new DateTime($qtdStart);
-
-        $thisMonth = $today->format('m');
-        $thisYear = $today->format('Y');
-
-        $_SESSION['mtdStart'] = new DateTime (date('Y-m-01 0:0:0', strtotime('today')));
-        $_SESSION['mtdEnd'] = new DateTIme (date('Y-m-t 23:59:59', strtotime('today')));
-
-        $_SESSION['ytdStart'] = new DateTime (date('Y-01-01 0:0:0', strtotime('today')));
-        $_SESSION['ytdEnd'] = new DateTime (date('Y-12-31 23:59:59', strtotime('today')));
-    }
-
     /**
      * @param $conn mysqli
      * @return array
@@ -118,8 +74,6 @@ ORDER BY a.transDate, c.catName");
         $catArray[] = $catName;
     }
 
-    setStartEnd();
-
     getTrans($conn, $periods);
 
     foreach($periods as $period) {
@@ -143,32 +97,28 @@ ORDER BY a.transDate, c.catName");
         $incTotal = $incTotal + $houseInc;  //$houseInc is a negative number as is all income from database
 
         $data['html'] .= "<div id='" . $period . "'>
-                  <div class='periodLine' style=''>
-                  <div class='period' style=''>
-             <h1 style='' class='periodHeader'>" .
+                  <div class='periodLine'>
+                  <div class='period'>
+             <h1  class='periodHeader'>" .
                          strtoupper($period) .
                          "</h1></div>
-                         <div class='timePeriod' style=''><p class='periodText'>(" .
+                         <div data-period='" . $period . "' class='timePeriod'><p class='periodText'>(" .
                          $_SESSION[$start]->format(DISPLAY) . " - " .
                          $_SESSION[$end]->format(DISPLAY) . ")</p></div></div>
-             <div class='periodSummaryDiv' style=''>
-             <div class='periodSummaryLabels' style=''>
-             <div class='periodSummary' style=''>Expense:</div>
-            <div class='periodSummary' style=''>Income:</div>             
-            <div class='periodSummary' style=''>Cashflow:</div>
-             </div>
-             <div class='periodSummaryTotals' style=''>
-             <div class='periodSummary' style=''>" . $expTotal . "</div>
-            <div class='periodSummary' style=''>" . $incTotal . "</div>             
-            <div class='periodSummary' style=''>" . $cashFlow . "</div>
-             </div>
+             <div class='periodSummaryDiv'>
+             <div data-type='exp' data-period=" . $period .
+                         " class='periodSummary thirdWidth'><div>Expense:</div><div>" . $expTotal . "</div></div>
+             <div data-type='inc' data-period=" . $period .
+                         " class='periodSummary thirdWidth'><div>Income:</div><div>" . $incTotal . "</div></div>
+             <div data-type='cfl' data-period=" . $period .
+                         " class='periodSummary thirdWidth'><div>Cash Flow:</div><div>" . $cashFlow . "</div></div>
              </div>";
         if(!isset($_SESSION['report'][$period])) {
             $data['html'] .= "Nothing Entered For This Period";
         } else {
 
 //            $_SESSION['report'][$period]['inc']['total'] += $_SESSION['report'][$period]['tips'];
-            $data['html'] .= "<div class='famDiv' style=''>";
+            $data['html'] .= "<div class='famDiv'>";
             foreach($families as $famName) {
                 $divID = $period . $famName;
                 switch($famName) {
@@ -196,22 +146,27 @@ ORDER BY a.transDate, c.catName");
                 }
 
                 $data['html'] .= "<div data-family='" . $famName . "' data-period='" . $period .
-                                 "' style='' class='catPopBtn'><h3>" .
+                                 "'  class='catPopBtn'><h3>" .
                                  $famName . "</h3>
 
                 <p>Exp: " . $famExp . "</p>
                 <p>% Total: " . number_format(($famExp / $expTotal) * 100, 2, '.', ',') . "</p>
                 </div>";
 
-                $data['hiddenHTML'] .= "<div id='" . $divID . "' style='' class='popup catPop'>
-                <div id='catHeader'><h3>".strtoupper($period)." ".$famName." EXPENSES</h3></div><div class='catDiv' style=''>";
+                $data['hiddenHTML'] .= "<div id='" . $divID . "'  class='popup catPop'>
+                <div id='catHeader'><h3>" . strtoupper($period) . " " . $famName .
+                                       " EXPENSES</h3></div><div class='catDiv'>";
                 foreach($catArray as $catName) {
-                    isset($_SESSION['report'][$period][$famName]['exp'][$catName]) ? $catExp = $_SESSION['report'][$period][$famName]['exp'][$catName] : $catExp = 0;
-                    isset($_SESSION['report'][$period][$famName]['inc'][$catName]) ? $catInc = $_SESSION['report'][$period][$famName]['inc'][$catName] : $catInc = 0;
+                    isset($_SESSION['report'][$period][$famName]['exp'][$catName]) ?
+                        $catExp = $_SESSION['report'][$period][$famName]['exp'][$catName] : $catExp = 0;
+                    isset($_SESSION['report'][$period][$famName]['inc'][$catName]) ?
+                        $catInc = $_SESSION['report'][$period][$famName]['inc'][$catName] : $catInc = 0;
                     $catTotal = number_format(($catExp + $catInc), 2, '.', ',');
-                    
+
                     if(isset($_SESSION['report'][$period][$famName]['exp'][$catName])) {
-                        $data['hiddenHTML'] .= "<div data-period='".$period."' data-category='".$catName."'  class='catLine'><div class='catLabel'>" . $catName . "</div><div class='catTotal'> " .
+                        $data['hiddenHTML'] .= "<div data-period='" . $period . "' data-category='" . $catName .
+                                               "'  class='catLine'><div class='catLabel'>" . $catName .
+                                               "</div><div class='catTotal'> " .
                                                $catTotal .
                                                "</div></div>";
                     }
@@ -224,5 +179,7 @@ ORDER BY a.transDate, c.catName");
         }
 
     }
+
+    $data['session'] = $_SESSION;
 
     echo json_encode($data);

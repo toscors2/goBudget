@@ -14,7 +14,7 @@
     $updateSQL =
         "UPDATE budget.quickEntry SET processed = 'y' WHERE transID = ?"; //sql statement to update quickEntry processed
     $verifySQL =
-        "SELECT itemPrice, itemQty, itemSource, itemCategory FROM budget.lineItems WHERE transID = ?"; //sql statement to get lineItems saved
+        "SELECT iPrice, iQty, iSource, iCategory FROM budget.lineItems WHERE transID = ?"; //sql statement to get lineItems saved
     $checkSQL =
         "SELECT amount, tender FROM budget.quickEntry WHERE transID = ?"; //sql statement to get amount from quick entry to check with saved items
 

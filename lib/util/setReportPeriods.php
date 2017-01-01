@@ -66,10 +66,10 @@
             $startDate->modify('-1 week');
             break;
         case 'lastMonth':
-            $month = date('Y-m-d', strtotime('last Month'));
+            $month = date('Y-m-d', strtotime('-1 Month'));
             break;
         case 'lastYear':
-            $year = date('Y-m-d', strtotime('last Year'));
+            $year = date('Y-m-d', strtotime('-1 Year'));
             break;
         case 'lastQtr':
             $quarter -= 1;

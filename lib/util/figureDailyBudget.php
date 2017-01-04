@@ -17,7 +17,7 @@
         $conn->prepare("
                     SELECT transDate, dateTime, amount, type, category 
                     FROM budget.quickEntry 
-                    WHERE amount > 0 and processed != 'd'and transDate = ?");
+                    WHERE amount > 0 and processed != 'd'and transDate = ? and category = 'pers'");
     $getTransDates->bind_param("s", $todayTest);
     $getTransDates->execute();
     $getTransDates->store_result();

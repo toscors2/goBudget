@@ -9,6 +9,8 @@
 
     $cash = $tips = $savings = $transferAmount = $transferAmount = $updateCode = $updateAmount = null;
 
+        $_SESSION['balanceUpdates'] = [];
+
     /**@param $conn mysqli */
     function updateBalance($amount, $code, $conn) {
         if($amount != null and $code != null) {
@@ -20,6 +22,8 @@
             $select->fetch();
 
             $newBalance = $balance + $amount;
+
+            $_SESSION['balanceUpdates'][] = ['code' => $code, 'amount' => $amount];
 
             $update = $conn->prepare("update budget.tender set balance = ? where tenderCode = ?");
             $update->bind_param("ss", $newBalance, $code);
@@ -43,34 +47,37 @@
             case 'tips':
                 $tips = $_SESSION['totalTips'];
                 if($tips != null) {
-                    $savings = (int)($tips * .1);
+                    $savings = floor($tips * .1);
                     $cash = $tips - $savings;
                     $codes = [1001, 1002];
 
-                    foreach($codes as $code) {
-                        $select = $conn->prepare("SELECT balance FROM budget.tender WHERE tenderCode = ?");
-                        $select->bind_param("s", $code);
-                        $select->execute();
-                        $select->store_result();
-                        $select->bind_result($balance);
-                        $select->fetch();
+                    updateBalance($cash, 1001, $conn);
+                    updateBalance($savings, 1002, $conn);
 
-                        switch($code) {
-                            case 1001:
-                                $newBalance = $balance + $cash;
-                                break;
-                            case 1002:
-                                $newBalance = $balance + $savings;
-                                break;
-                            default:
-                                $newBalance = null;
-                                break;
-                        }
-
-                        $update = $conn->prepare("UPDATE budget.tender SET balance = ? WHERE tenderCode = ?");
-                        $update->bind_param("ss", $newBalance, $code);
-                        $update->execute();
-                    }
+//                    foreach($codes as $code) {
+//                        $select = $conn->prepare("SELECT balance FROM budget.tender WHERE tenderCode = ?");
+//                        $select->bind_param("s", $code);
+//                        $select->execute();
+//                        $select->store_result();
+//                        $select->bind_result($balance);
+//                        $select->fetch();
+//
+//                        switch($code) {
+//                            case 1001:
+//                                $newBalance = $balance + $cash;
+//                                break;
+//                            case 1002:
+//                                $newBalance = $balance + $savings;
+//                                break;
+//                            default:
+//                                $newBalance = null;
+//                                break;
+//                        }
+//
+//                        $update = $conn->prepare("UPDATE budget.tender SET balance = ? WHERE tenderCode = ?");
+//                        $update->bind_param("ss", $newBalance, $code);
+//                        $update->execute();
+//                    }
                 } else {
                     $data['error'] = 'No Tips Submitted';
                 }

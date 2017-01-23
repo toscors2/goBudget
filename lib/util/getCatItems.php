@@ -20,7 +20,7 @@
 
     $selectSQL = "SELECT a.iName, a.iPrice, a.iQty, b.transDate, a.lineID FROM budget.lineItems AS a 
                   LEFT JOIN budget.quickEntry AS b ON a.transID = b.transID 
-                  WHERE b.transDate >= ? AND b.transDate <= ? AND iCategory = ?
+                  WHERE b.transDate BETWEEN ? AND ? AND iCategory = ?
                   ORDER BY b.transDate";
 
     $select = $conn->prepare($selectSQL);
@@ -34,8 +34,15 @@
         $transDate = new DateTime($transDate);
         $transDate = $transDate->format("m-d");
 
-        $data['html'] .= "<div class='lineItems' id='".$lineID."' style='font-size:small; height:20px;'><div class='quarterWidth' style='white-space:nowrap; float:left;'>" . $transDate . "</div><div class='quarterWidth' style='white-space:nowrap; float:left; overflow:hidden; text-align:left;'>" . $iName . "</div><div class='quarterWidth' style='white-space:nowrap; float:left; text-align:center;'>" . $iPrice . " x " . $iQty . "</div><div class='quarterWidth' style='white-space:nowrap; float:left; text-align:right;'>" .
-             $iPrice * $iQty . "</div></div>";
+        $data['html'] .= "<div class='lineItems' id='" . $lineID .
+                         "' style='font-size:small; height:20px;'><div class='quarterWidth' style='white-space:nowrap; float:left;'>" .
+                         $transDate .
+                         "</div><div class='quarterWidth' style='white-space:nowrap; float:left; overflow:hidden; text-align:left;'>" .
+                         $iName .
+                         "</div><div class='quarterWidth' style='white-space:nowrap; float:left; text-align:center;'>" .
+                         $iPrice . " x " . $iQty .
+                         "</div><div class='quarterWidth' style='white-space:nowrap; float:left; text-align:right;'>" .
+                         $iPrice * $iQty . "</div></div>";
     }
 
     $data['html'] .= "</div>";

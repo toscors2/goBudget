@@ -68,12 +68,12 @@
                              "%' GROUP BY catName";
                 break;
             case 'name':
-                $searchSQL = "SELECT itemName, transID FROM budget.lineItems WHERE itemName LIKE '%" . $term .
-                             "%' GROUP BY itemName";
+                $searchSQL = "SELECT iName, transID FROM budget.lineItems WHERE iName LIKE '%" . $term .
+                             "%' GROUP BY iName";
                 break;
             case 'number':
-                $searchSQL = "SELECT itemNum, transID FROM budget.lineItems WHERE itemNum LIKE '%" . $term .
-                             "%' GROUP BY itemNum";
+                $searchSQL = "SELECT iNumber, transID FROM budget.lineItems WHERE iNumber LIKE '%" . $term .
+                             "%' GROUP BY iNumber";
                 break;
             default:
                 $searchSQL = null;
@@ -104,13 +104,13 @@
         switch($function) {
             case 'fillName':
                 $searchSQL
-                    = "SELECT itemName, itemNum, itemPrice, itemPack, itemSize, itemCategory FROM budget.lineItems 
-                              WHERE itemName = '" . $term . "'";
+                    = "SELECT iName, iNumber, iPrice, iPack, iSize, iCategory FROM budget.lineItems 
+                              WHERE iName = '" . $term . "'";
                 break;
             case 'fillNumber':
                 $searchSQL
-                    = "SELECT itemName, itemNum, itemPrice, itemPack, itemSize, itemCategory FROM budget.lineItems 
-                              WHERE itemNum = '" . $term . "'";
+                    = "SELECT iName, iNumber, iPrice, iPack, iSize, iCategory FROM budget.lineItems 
+                              WHERE iNumber = '" . $term . "'";
                 break;
             default:
                 $searchSQL = null;

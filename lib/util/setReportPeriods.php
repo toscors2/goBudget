@@ -14,7 +14,7 @@
             : $_SESSION['wtdStart'] = $startDate;
         $startDate->format('l') != 'Friday' ?
             $_SESSION['wtdEnd'] = new DateTime(date('Y-m-d 23:59:59', strtotime($todayStart . ' next Friday')))
-            : $_SESSION['wtdEnd'] = new DateTime(strtotime($todayEnd));
+            : $_SESSION['wtdEnd'] = new DateTime(date('Y-m-d 23:59:59', strtotime($todayEnd)));
     }
 
     function setQTD($quarter) {

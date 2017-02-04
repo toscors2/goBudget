@@ -12,7 +12,7 @@
         $getTrans = $conn->prepare("
 SELECT a.amount, a.transDate, a.type, b.iQty, b.iPrice, b.iCategory, d.familyName FROM budget.quickEntry AS a 
 LEFT JOIN budget.lineItems AS b ON a.transID = b.transID
-LEFT JOIN budget.categories AS c ON b.iCategory = c.catName
+LEFT JOIN budget.iCategories AS c ON b.iCategory = c.catName
 LEFT JOIN budget.family AS d ON c.catFamily = d.familyID
 WHERE a.processed = 'y' && c.report = 'y'
 ORDER BY a.transDate, c.catName");
@@ -64,7 +64,7 @@ ORDER BY a.transDate, c.catName");
 
         $catArray = [];
 
-        $categories = $conn->prepare("SELECT catName FROM budget.categories ORDER BY catName");
+        $categories = $conn->prepare("SELECT catName FROM budget.iCategories ORDER BY catName");
         $categories->execute();
         $categories->store_result();
         $categories->bind_result($catName);

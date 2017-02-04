@@ -3,14 +3,22 @@
 
     include("../cfg/connect.php");
 
-    $entryDate = date_create(null, new DateTimeZone('America/New_York'));
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+
+        return $data;
+    }
+
+    $entryDate = new DateTime();
     $user = 1;
-    $transDate = $_POST['transDate'];
-    $receipt = $_POST['receipt'];
-    $tender = $_POST['tender'];
-    $type = $_POST['type'];
-    $category = $_POST['category'];
-    $amount = $_POST['amount'];
+    $transDate = test_input($_POST['transDate']);
+//    $receipt = test_input($_POST['receipt']);
+    $tender = test_input($_POST['tender']);
+    $type = test_input($_POST['type']);
+    $category = test_input($_POST['category']);
+    $amount = test_input($_POST['amount']);
     $data['tips'] = $data['transfer'] = false;
 
     if($amount > 0 && !preg_match('/./', $amount)) {
@@ -55,8 +63,8 @@
 //    $idCount = $idSQL->last;
 
     $insert =
-        $conn->prepare("INSERT INTO budget.quickEntry (dateTime, transDate, receipt, tender, type, category, amount, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $insert->bind_param("ssssssss", $thisDate, $transDate, $receipt, $tender, $type, $category, $amount, $user);
+        $conn->prepare("INSERT INTO budget.quickEntry (dateTime, transDate, tender, type, category, amount, userID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $insert->bind_param("sssssss", $thisDate, $transDate, $tender, $type, $category, $amount, $user);
     $insert->execute();
     $idCount = $insert->insert_id;
 

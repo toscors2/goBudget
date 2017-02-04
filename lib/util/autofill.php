@@ -20,32 +20,7 @@
 
     function stuff() {
 
-        $data = [];
 
-        if($input == 'itemSource') {
-            $data['yes']['sources'] = $data['no']['sources'] = false;
-            $data['yes']['count']   = $data['no']['count'] = 0;
-            while($srcSrch->fetch()) {
-
-                $strTst = -1;
-                $strTst = stripos($sourceName, $str);
-
-                if($strTst !== false) {
-                    $data['yes']['sources'][] = $sourceName;
-                    $data['yes']['count']++;
-                } else {
-                    $data['no']['sources'][] = $sourceName;
-                    $data['no']['count']++;
-                }
-            }
-        }
-        echo "<html><body><div data-id='sources' class='afSourceBox' style=''>";
-        foreach($data['yes']['sources'] as $sources) {
-
-            echo "<div data-id='sourceName' class='afSourceLine' style=''>" . $sources . "</div>";
-
-        }
-        echo "</div></body></html>";
     }
 
     /**
@@ -64,7 +39,7 @@
                              "%' GROUP BY sourceName";
                 break;
             case 'category':
-                $searchSQL = "SELECT catName, catID FROM budget.categories WHERE catName LIKE '%" . $term .
+                $searchSQL = "SELECT catName, catID FROM budget.iCategories WHERE catName LIKE '%" . $term .
                              "%' GROUP BY catName";
                 break;
             case 'name':

@@ -36,36 +36,39 @@
                     Entry
                     Date: </label><input id="transDate" class='centerObject' type="text" name="transDate"
                                          placeholder="Today" style="width:200px" />
+                <!--<label class='fullWidth'>-->
+                    <!--<select name='receipt'>-->
+                        <!--<option value='y'>I Have A Receipt</option>-->
+                        <!--<option value='n'>Do Not Have Receipt</option>-->
+                    <!--</select>-->
+                <!--</label><br>-->
                 <label class='fullWidth'>
-                    <select name='receipt'>
-                        <option value='y'>I Have A Receipt</option>
-                        <option value='n'>Do Not Have Receipt</option>
-                    </select>
-                </label><br>
-                <label class='fullWidth'>
-                    <select name='category'>
-                        <option value='pers'>Personal</option>
-                        <option value='hous'>Household</option>
-                        <option value='bsns'>Business</option>
+                    <select id='qeCategory' name='category'>
+                        <option value='loading'>Loading Categories</option>
+                        <!--<option value='pers'>Personal</option>-->
+                        <!--<option value='hous'>Household</option>-->
+                        <!--<option value='bsns'>Business</option>-->
                     </select>
                 </label><br>
                 <label class='fullWidth'>
                     <select id='tender' name='tender'>
-                        <option value='cash'>Cash</option>
-                        <option value='boa'>BOA - 1533</option>
-                        <option value='paypal'>PayPal - 6642</option>
-                        <option value='td'>TD - 4362</option>
-                        <option value='netspend'>NetSpend - 2614</option>
-                        <option value='skylight'>Skylight - 5130</option>
-                        <option value='ebt'>EBT - 2577</option>
+                        <option value='loading'>Loading Tenders</option>
+                        <!--<option value='cash'>Cash</option>-->
+                        <!--<option value='boa'>BOA - 1533</option>-->
+                        <!--<option value='paypal'>PayPal - 6642</option>-->
+                        <!--<option value='td'>TD - 4362</option>-->
+                        <!--<option value='netspend'>NetSpend - 2614</option>-->
+                        <!--<option value='skylight'>Skylight - 5130</option>-->
+                        <!--<option value='ebt'>EBT - 2577</option>-->
                     </select>
                 </label><br>
                 <label class='fullWidth'>
-                    <select name='type'>
-                        <option value='exp'>Expense</option>
-                        <option value='inc'>Income</option>
-                        <option value='tips'>Tip Income</option>
-                        <option value='transfer'>Transfer</option>
+                    <select id='qeType' name='type'>
+                        <option value='loading'>Loading Types</option>
+                        <!--<option value='exp'>Expense</option>-->
+                        <!--<option value='inc'>Income</option>-->
+                        <!--<option value='tips'>Tip Income</option>-->
+                        <!--<option value='transfer'>Transfer</option>-->
                     </select>
                 </label><br>
 
@@ -78,30 +81,30 @@
             </form>
         </div>
 
-        <div id='filterOption' class='content hidden'>
-            <div style='width:100%; text-align:center;'>
-                <h1>Choose Item Filter</h1>
-                <form id='filterOptions' name='filterOptions' method='post' action=''>
-                    <label>
-                        <select name='filterOption'>
-                            <option value='uReceipt'>View UnProcessed Items With Receipt</option>
-                            <option value='uNoReceipt'>View Unprocessed Items Without Receipt</option>
-                            <option value='uAll'>View All UnProcessed Transactions</option>
-                        </select>
-                    </label>
-                    <input type='submit' name='submitFilter' id='submitFilter' class='bigSubmit'
-                           value='Filter Transactions' />
-                </form>
-            </div>
+        <!--<div id='filterOption' class='content hidden'>-->
+            <!--<div style='width:100%; text-align:center;'>-->
+                <!--<h1>Choose Item Filter</h1>-->
+                <!--<form id='filterOptions' name='filterOptions' method='post' action=''>-->
+                    <!--<label>-->
+                        <!--<select name='filterOption'>-->
+                            <!--<option value='uReceipt'>View UnProcessed Items With Receipt</option>-->
+                            <!--<option value='uNoReceipt'>View Unprocessed Items Without Receipt</option>-->
+                            <!--<option value='uAll'>View All UnProcessed Transactions</option>-->
+                        <!--</select>-->
+                    <!--</label>-->
+                    <!--<input type='submit' name='submitFilter' id='submitFilter' class='bigSubmit'-->
+                           <!--value='Filter Transactions' />-->
+                <!--</form>-->
+            <!--</div>-->
 
-            <div style='width:100%; text-align:center; margin-top:25px;'>
-                <button id='processWhole'>
-                    Process Entire Transaction
-                </button>
-            </div>
+            <!--<div style='width:100%; text-align:center; margin-top:25px;'>-->
+                <!--<button id='processWhole'>-->
+                    <!--Process Entire Transaction-->
+                <!--</button>-->
+            <!--</div>-->
 
 
-        </div>
+        <!--</div>-->
 
         <div id='processScreen' class='content hidden' style='overflow:auto;'></div>
 
@@ -139,21 +142,21 @@
 
     </div>
 
-    <div id='footer' style='position:fixed; width:100%; height:10%; bottom:0; background-color:orangered;'>
-        <div id="qeOption" class='footerMenu fifthWidth whiteTxt activeFooter'>
+    <div id='footer' style=''>
+        <div id="quickEntry" class='footerMenu fifthWidth whiteTxt activeFooter'>
             <p>Quick <br> Entry</p>
         </div>
-        <div id="processOption" class='footerMenu fifthWidth whiteTxt'>
+        <div id="processTrans" class='footerMenu fifthWidth whiteTxt'>
             <p>Process <br><span id='numItemsUnprocessed'>0</span></p>
         </div>
-        <div id="cfgOption" class='footerMenu fifthWidth whiteTxt'>
-            <p>Config <br> Income</p>
+        <div id="recurring" class='footerMenu fifthWidth whiteTxt'>
+            <p>Recur Trans</p>
         </div>
-        <div id="balanceOption" class='footerMenu fifthWidth whiteTxt'>
-            <p>Reconcile<br>Balances</p>
+        <div id="balances" class='footerMenu fifthWidth whiteTxt'>
+            <p>View Balance</p>
         </div>
-        <div id="reportOption" class='footerMenu fifthWidth whiteTxt'>
-            <p>View<br>Reports</p>
+        <div id="reports" class='footerMenu fifthWidth whiteTxt'>
+            <p>View Reports</p>
         </div>
     </div>
 

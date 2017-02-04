@@ -24,7 +24,7 @@
               a.itemCategory, c.catFamily, a.iName, a.itemSource 
               FROM budget.lineItems AS a 
               JOIN budget.quickEntry AS b ON a.transID = b.transID 
-              JOIN budget.categories AS c ON a.itemCategory = c.catName 
+              JOIN budget.iCategories AS c ON a.itemCategory = c.catName 
               WHERE b.processed = 'y' ORDER BY c.catFamily, c.catName, b.transDate";
         $categories = $conn->prepare($categoryQry);
         $categories->execute();

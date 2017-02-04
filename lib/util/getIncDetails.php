@@ -38,7 +38,7 @@
     function getPeriodInc($conn, $Start, $End) {
 
         $inc = [];
-        $selectSQL = "SELECT b.iCategory, a.amount, a.transDate, a.transID FROM budget.quickEntry AS a 
+        $selectSQL = "SELECT b.iCategory, a.amount, a.transDate, b.lineID FROM budget.quickEntry AS a 
                     LEFT JOIN budget.lineItems AS b ON a.transID = b.transID
                   WHERE a.transDate BETWEEN ? AND  ? AND a.type = 'inc' AND a.processed != 'd' AND b.iCategory != 'HOUSE BILL'
                   ORDER BY a.transDate";
@@ -47,10 +47,10 @@
         $select->bind_param("ss", $Start, $End);
         $select->execute();
         $select->store_result();
-        $select->bind_result($category, $amount, $transDate, $transID);
+        $select->bind_result($category, $amount, $transDate, $lineID);
 
         while($select->fetch()) {
-            $inc[] = "<div class='lineItems' id='" . $transID .
+            $inc[] = "<div class='lineItems' id='" . $lineID .
                      "' style='font-size:small; height:20px;'><div class='thirdWidth' style='white-space:nowrap; float:left;'>" .
                      $transDate .
                      "</div><div class='thirdWidth' style='white-space:nowrap; float:left; overflow:hidden; text-align:left;'>" .

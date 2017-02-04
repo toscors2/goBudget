@@ -5,7 +5,7 @@
     include('../cfg/connect.php');
 
     $returnData = $entriesArray = [];
-    $html = $receipt = '';
+    $html = '';
 
     function lineItems($lineItem) {
 
@@ -52,6 +52,5 @@ EOF;
 
     $returnData['html'] = trim(preg_replace('/[\s\t\n\r\s]+/', ' ', $html));
     $returnData['testing'] = "this is just a test";
-    $returnData['receipt'] = $receipt;
 
     echo json_encode($returnData);

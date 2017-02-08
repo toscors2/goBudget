@@ -10,7 +10,7 @@
 
     include("../cfg/connect.php");
 
-    echo "<div id='tabs'>
+    echo "<div id='recurring'>
 <ul>
 <li><a id='newTransLnk' href='#newTrans'>New</a></li>
 <li><a id='addTransLnk' href='#addTrans'>Add</a></li>
@@ -23,5 +23,5 @@
 <div id='editTrans' class='tabContent'>Feature Coming Soon</div>
 </div>
 
-<script>$('#tabs').tabs();</script>";
+<script>$('#recurring').tabs();</script>";
 

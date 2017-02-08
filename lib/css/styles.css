@@ -458,3 +458,50 @@ input, label {
     bottom: 0;
     background-color: orangered;
 }
+
+.billingInfo {
+    margin: 15px 0;
+    height: 30px;
+}
+
+.paymentInfo {
+    margin:10px 0;
+    height:60px;
+}
+
+
+.payInput {
+    font-size: 10px;
+}
+
+.upcomingTrans {
+    border: 1px solid black;
+    border-radius: 7px;
+    margin: 2px 0;
+    height:auto;
+    padding:4px;
+}
+
+.recurTender select {
+    height:30px;
+}
+
+#paymentCtrl {
+    height:60px;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#paymentInfo {
+    height:80px;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding:4px;
+}
+
+.recurPayBtn {
+    margin:2px;
+    border: 1px solid black;
+    border-radius: 7px;
+    width: calc(50% - 5px);
+}

@@ -9,21 +9,21 @@
     session_start();
 
     function showUpcomingX($id, $billDate, $recurID) {
-        echo "<div id='" . $id .
-             "' class='newRecurXContainer' style='margin: 2px 0; padding:5px; border-radius: 7px; text-align:center; border:1px solid black;'><div class='addFormContainer'><form id='form-" .
-             $id . "' name='addUpcomingXForm' method='post' action=''>
+        $html = "<div id='" . $id .
+                "' class='newRecurXContainer' style='margin: 2px 0; padding:5px; border-radius: 7px; text-align:center; border:1px solid black;'><div class='addFormContainer'><form id='form-" .
+                $id . "' name='addUpcomingXForm' method='post' action=''>
     <div style='width:100%; height:50px'>
         <div style='width:33%; height:50px; float:left;'>
             <div style='text-align:center; height:20px;'><label for='billDate-" . $id . "'>Bill Date</label></div>
             <div style='text-align:center; height:30px; '><input id='billDate-" . $id .
-             "' class='dateInput' type='text' name='xBillDate' value='" .
-             $billDate . "'/></div>
+                "' class='dateInput' type='text' name='xBillDate' value='" .
+                $billDate . "'/></div>
         </div>
         <div style='width:33%; height:50px; float:left;'>
             <div style='text-align:center; height:20px;'><label for='dueDate-" . $id . "'>Due Date</label></div>
             <div style='text-align:center; height:30px;'><input id='dueDate-" . $id .
-             "' class='dateInput' type='text' name='xDueDate' value='" .
-             $billDate . "'/></div>
+                "' class='dateInput' type='text' name='xDueDate' value='" .
+                $billDate . "'/></div>
         </div>
         <div style='width:33%; height:50px; float:left;'>
             <div style='text-align:center; height:20px;;'><label for='amount-" . $id . "'>Amount</label></div>
@@ -36,6 +36,8 @@
 <div data-switch='markPaid' data-xid='" . $id . "' data-recurid='" . $recurID . "' class='upcomingXCtrl mark' style='float:left; width:50%;'>Mark Paid</div>
 
 </div></div>";
+
+        return $html;
     }
 
     include('../cfg/connect.php');
@@ -58,6 +60,8 @@ WHERE a.active = TRUE");
     $getTrans->bind_result($dueOn, $source, $type, $category, $startDate, $frequency, $name, $recurID, $lastAdd);
 
     while($getTrans->fetch()) {
+
+        $transArray = [];
 
         $frequency == 'monthly' ? $interval = new DateInterval('P1M') : $interval = new DateInterval('P1W');
 
@@ -88,15 +92,22 @@ WHERE a.active = TRUE");
 
         $searchPeriod = new DatePeriod($dueDate, $interval, $endDate);
 
-        echo "<h2>" . $source .
-             ": </h2>" . BR;
+
         foreach($searchPeriod as $searchDate) {
             $id = $searchDate->format('Ymd') . $recurID;
             $billDate = $searchDate->format('m/d/Y');
             $searchDate->modify('+5 Days');
             $dueDate = $searchDate->format('m/d/Y');
 
-            showUpcomingX($id, $billDate, $recurID);
+            $transArray[] = showUpcomingX($id, $billDate, $recurID);
+        }
+
+        if(count($transArray) != 0) {
+            echo "<h2>" . $source .
+                 ": </h2>";
+            foreach($transArray as $html) {
+                echo $html . BR;
+            }
         }
 
     }

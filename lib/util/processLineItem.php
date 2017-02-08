@@ -22,8 +22,10 @@
         return $data;
     }
 
-    if(isset($_POST) && $_POST['iPrice'] != '' && $_POST['iName'] != '') {
-        $item = $_POST;
+    isset ($_POST['iTransID']) ? $item = $_POST : $item = $_SESSION['recurringPayment'];
+
+    if($item['iPrice'] != '' && $item['iName'] != '') {
+
         $iTransID = test_input($item['iTransID']);
         $iSource = test_input($item['iSource']);
         $iNumber = test_input($item['iNumber']);

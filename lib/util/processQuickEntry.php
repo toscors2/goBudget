@@ -14,7 +14,6 @@
     $entryDate = new DateTime();
     $user = 1;
     $transDate = test_input($_POST['transDate']);
-//    $receipt = test_input($_POST['receipt']);
     $tender = test_input($_POST['tender']);
     $type = test_input($_POST['type']);
     $category = test_input($_POST['category']);
@@ -53,7 +52,7 @@
 
     $thisDate = $entryDate->format("Y-m-d H:i:s");
 
-    $transDate = date_format($date, "Y/m/d");
+    $transDate = date_format($date, "Y-m-d");
     $dateCode = date_format($date, "m-d");
 
     $queryID = "SELECT * FROM budget.quickEntry";
@@ -70,9 +69,22 @@
 
     $transID = $idCount . "-" . $dateCode;
 
-    $_SESSION['transID'] = $data['transID'] = $transID;
+    $_SESSION['recurringPayment']['iTransID'] = $_SESSION['transID'] = $data['transID'] = $transID;
+
+     $_SESSION['amount'] = $data['amount'] = $amount;
+
+    $amount < 0 ? $_SESSION['recurringPayment']['iPrice'] = $amount * -1 : $_SESSION['recurringPayment']['iPrice'] = $amount;
+
+
+    isset ($_POST['iSource']) ? $_SESSION['recurringPayment']['iSource'] = $_POST['iSource'] : $_SESSION['recurringPayment']['iSource'] = '';
+    isset ($_POST['iNumber']) ? $_SESSION['recurringPayment']['iNumber'] = $_POST['iNumber'] : $_SESSION['recurringPayment']['iNumber'] = '';
+    isset ($_POST['iName']) ? $_SESSION['recurringPayment']['iName'] = $_POST['iName'] : $_SESSION['recurringPayment']['iName'] = '';
+    isset ($_POST['iCategory']) ? $_SESSION['recurringPayment']['iCategory'] = $_POST['iCategory'] : $_SESSION['recurringPayment']['iCategory'] = '';
+    isset ($_POST['iQty']) ? $_SESSION['recurringPayment']['iQty'] = $_POST['iQty'] : $_SESSION['recurringPayment']['iQty'] = 1;
+    isset ($_POST['iPack']) ? $_SESSION['recurringPayment']['iPack'] = $_POST['iPack'] : $_SESSION['recurringPayment']['iPack'] = '';
+    isset ($_POST['iSize']) ? $_SESSION['recurringPayment']['iSize'] = $_POST['iSize'] : $_SESSION['recurringPayment']['iSize'] = '';
+
     $_SESSION['type'] = $data['type'] = $type;
-    $_SESSION['amount'] = $data['amount'] = $amount;
     $_SESSION['tender'] = $tender;
 
     $update = $conn->prepare("UPDATE budget.quickEntry SET transID = ? WHERE entryID = ?");

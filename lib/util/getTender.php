@@ -17,7 +17,7 @@
                          "</option>";
                     break;
                 case 'balance':
-                    echo "<div class='fullWidth'>
+                    echo "<div class='fullWidth' style='height:30px;'>
                             <div class='quarterWidth'>$tenderCode</div>
                             <div class='quarterWidth'>$tenderName</div>
                             <div class='quarterWidth'><label><input type='tel' id='$tenderCode' value='$balance'/></label></div>

@@ -5,6 +5,14 @@
      * Date: 1/31/17
      * Time: 9:08 AM
      */
+
+    require('../class/Options.php');
+
+    $options = new Options();
+
+    $types = $options->getTypeOptions();
+    $categories = $options->getCategoryOptions();
+
 ?>
 
 <form id='addTransForm' name='addTransForm' method='post' action=''>
@@ -22,13 +30,13 @@
     <div class='recurLine'>
         <div class='recurLabelDiv'><label for='recurType' class='recurLabel'>Trans Type: </label></div>
         <div class='recurInputDiv'><select id='recurType' class='recurInput center'
-                                           name='type'><?php require_once('getType.php'); ?></select>
+                                           name='type'><?php foreach ($types as $type) { echo $type;} ?></select>
         </div>
     </div>
     <div class='recurLine'>
         <div class='recurLabelDiv'><label for='recurCategory' class='recurLabel'>Recurring Category:</label></div>
         <div class='recurInputDiv'><select id='recurCategory' class='recurInput center'
-                                           name='category'><?php require_once('getCategory.php'); ?></select>
+                                           name='category'><?php foreach($categories as $category) { echo $category;}; ?></select>
         </div>
     </div>
     <div class='recurLine'>

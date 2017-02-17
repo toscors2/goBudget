@@ -8,6 +8,9 @@
 
     session_start();
 
+    include('../cfg/connect.php');
+    include('../class/Options.php');
+
     function transHTML($transID, $source, $iName, $category, $type, $billDate, $dueDate, $amount, $family) {
         echo "<div><div id='" . $transID . "' class='upcomingTrans'>
     <div id='upcomingXHeader-" . $transID . "' style='height:55px;'>
@@ -34,7 +37,7 @@
              "' name='amount' class='payAmount' value='" . $amount . "'/></div>
             <div>
             <div class='halfWidth Lfloat'>Select Tender: </div>
-            <div class='halfWidth Lfloat'><select class='recurTender' style='height:30px; width:95%;' name='tender'></select></div>
+            <div class='halfWidth Lfloat'><select class='recurTender' style='height:30px; width:95%;' name='tender'>".getTender()."</select></div>
             </div>
             <input type='hidden' name='iCategory' value='" . $category . "'/>
             <input type='hidden' name='iSource' value='" . $source . "'/>
@@ -51,7 +54,18 @@
 </div></div>";
     }
 
-    include('../cfg/connect.php');
+    function getTender() {
+        $html = '';
+        $options = new Options();
+
+        $tender = $options->getTenderOptions();
+
+        foreach ($tender as $option) {
+            $html .= $option;
+        }
+
+        return trim($html);
+    }
 
     $getTrans = $conn->prepare("SELECT a.xBillDate, a.xDueDate, a.xAmount, a.id, b.source, c.catName, b.name, b.type, d.familyNick
     FROM budget.upcomingX AS a 

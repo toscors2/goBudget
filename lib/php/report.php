@@ -166,6 +166,31 @@ ORDER BY a.transDate, c.catName");
         return $famExp;
     }
 
+    function getHiddenHtml($divID, $period, $famName, $arrays, $report) {
+        $html = "<div id='" . $divID . "'  class='popup catPop'>
+                <div id='catHeader'><h3>" . strtoupper($period) . " " . $famName .
+                " EXPENSES</h3></div><div class='catDiv'>";
+        foreach($arrays['categories'] as $catName) {
+            isset($report[$period][$famName]['exp'][$catName]) ?
+                $catExp = $report[$period][$famName]['exp'][$catName] : $catExp = 0;
+            isset($report[$period][$famName]['inc'][$catName]) ?
+                $catInc = $report[$period][$famName]['inc'][$catName] : $catInc = 0;
+            $catTotal = number_format(($catExp + $catInc), 2, '.', ',');
+
+            if(isset($report[$period][$famName]['exp'][$catName])) {
+                $html .= "<div data-period='" . $period . "' data-category='" . $catName .
+                         "'  class='catLine'><div class='catLabel'>" . $catName .
+                         "</div><div class='catTotal'> " .
+                         $catTotal .
+                         "</div></div>";
+            }
+        }
+
+        $html .= "</div></div>";
+
+        return $html;
+    }
+
     function arrays($conn) {
         $periods = ['wtd', 'mtd', 'qtd', 'ytd'];
         $times = ['curr', 'previous', 'ly'];
@@ -211,26 +236,8 @@ ORDER BY a.transDate, c.catName");
                 <p>% Total: " . $expPercent . "</p>
                 </div>";
 
-                $data['hiddenHTML'] .= "<div id='" . $divID . "'  class='popup catPop'>
-                <div id='catHeader'><h3>" . strtoupper($period) . " " . $famName .
-                                       " EXPENSES</h3></div><div class='catDiv'>";
-                foreach($arrays['categories'] as $catName) {
-                    isset($report[$period][$famName]['exp'][$catName]) ?
-                        $catExp = $report[$period][$famName]['exp'][$catName] : $catExp = 0;
-                    isset($report[$period][$famName]['inc'][$catName]) ?
-                        $catInc = $report[$period][$famName]['inc'][$catName] : $catInc = 0;
-                    $catTotal = number_format(($catExp + $catInc), 2, '.', ',');
+                $data['hiddenHTML'] .= getHiddenHtml($divID, $period, $famName, $arrays, $report);
 
-                    if(isset($report[$period][$famName]['exp'][$catName])) {
-                        $data['hiddenHTML'] .= "<div data-period='" . $period . "' data-category='" . $catName .
-                                               "'  class='catLine'><div class='catLabel'>" . $catName .
-                                               "</div><div class='catTotal'> " .
-                                               $catTotal .
-                                               "</div></div>";
-                    }
-                }
-
-                $data['hiddenHTML'] .= "</div></div>";
             }
 
             $data['html'] .= "</div></div>";

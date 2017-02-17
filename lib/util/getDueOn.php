@@ -8,30 +8,42 @@
 
     session_start();
 
+    include("../class/Options.php");
+
+    $options = new Options();
+
     isset($_POST['frequency']) ? $frequency = $_POST['frequency'] : $frequency = null;
 
-    if ($frequency != null) {
+    if($frequency != null) {
 
-        switch ($frequency) {
+        switch($frequency) {
 
             case 'monthly':
-                include('getMonthlyOptions.php');
+                $html = $options->getMonthlyOptions();
                 break;
             case 'weekly':
-                include('getWeeklyOptions.php');
+                $html = $options->getWeeklyOptions();
                 break;
             case 'biWeekly':
-                include('getWeeklyOptions.php');
+                $html = $options->getWeeklyOptions();
                 break;
             case 'daily':
-                include('getVariableOptions.php');
+                $html = $options->getWeeklyOptions();
                 break;
             case'quarterly':
-                include('getVariableOptions.php');
+                $html = $options->getVariableOptions();
                 break;
             case'yearly':
-                include('getVariableOptions.php');
+                $html = $options->getVariableOptions();
+                break;
+            default:
+                $html = null;
         }
 
+        if($html != null) {
+            foreach($html as $option) {
+                echo $option;
+            }
+        }
 
     }

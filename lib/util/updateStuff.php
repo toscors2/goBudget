@@ -119,7 +119,7 @@
     function fillCategoryTbl($conn) {
 
         $selectCategoryQry =
-            "SELECT iCategory, transID FROM lineItems WHERE iCategory NOT IN (SELECT catName FROM categories) GROUP BY iCategory";
+            "SELECT iCategory, transID FROM lineItems WHERE iCategory NOT IN (SELECT catName FROM iCategories) GROUP BY iCategory";
 
         $selectCategory = $conn->prepare($selectCategoryQry);
         $selectCategory->execute();
@@ -128,7 +128,7 @@
 
         while($selectCategory->fetch()) {
             echo $itemCategory . "<br>";
-            $insertQry = "INSERT INTO categories (catName) VALUES ('" . $itemCategory . "')";
+            $insertQry = "INSERT INTO budget.iCategories (catName) VALUES ('" . $itemCategory . "')";
             $insert = $conn->prepare($insertQry);
             $insert->execute();
         }
@@ -221,18 +221,11 @@
     /**@param $conn mysqli */
     function changeSnackCategory($conn) {
 
-        $select = $conn->prepare("SELECT lineID, iCategory FROM budget.lineItems WHERE iCategory = 'SNACKS'");
-        $select->execute();
-        $select->store_result();
-        $select->bind_result($ID, $iCategory);
 
-        while($select->fetch()) {
-            echo $ID . ": " . $iCategory . BR;
 
-            $update = $conn->prepare("UPDATE budget.lineItems SET iCategory = 'SNACK' WHERE lineID = ?");
-            $update->bind_param("s", $ID);
+            $update = $conn->prepare("UPDATE budget.lineItems SET iCategory = 'SNACKS' WHERE iCategory = 'SNACK'");
             $update->execute();
-        }
+
 
     }
 
@@ -261,12 +254,54 @@
         $update->execute();
     }
 
-    fillSourceTbl($conn);
-    fillCategoryTbl($conn);
+    /**@param $conn mysqli */
+    function setOldReconciled($conn) {
+        $getOldTrans =
+            $conn->prepare("SELECT transID FROM budget.quickEntry WHERE transDate < '2016-11-22' AND reconciled = FALSE");
+        $getOldTrans->execute();
+        $getOldTrans->store_result();
+        $getOldTrans->bind_result($transID);
 
-//    changeTipsName($conn);
+        while($getOldTrans->fetch()) {
+            echo $transID . BR;
 
-//    changeFinancialFee($conn);
+            $reconcile = $conn->prepare("UPDATE budget.quickEntry SET reconciled = TRUE WHERE transID = ?");
+            $reconcile->bind_param("s", $transID);
+            $reconcile->execute();
+
+        }
+    }
+
+    /**
+     * @param $conn mysqli
+     */
+    function resetReconInfo($conn) {
+
+        $resetDate = '2017-01-01';
+
+        $getQEids = $conn->prepare("SELECT entryID FROM budget.recon WHERE reconDate > ?");
+        $getQEids->bind_param("s", $resetDate);
+        $getQEids->execute();
+        $getQEids->store_result();
+        $getQEids->bind_result($entryID);
+
+        while($getQEids->fetch()) {
+
+            echo $entryID .BR;
+
+            $resetQE = $conn->prepare("UPDATE budget.quickEntry SET reconciled = FALSE WHERE entryID = ?");
+            $resetQE->bind_param("s", $entryID);
+            $resetQE->execute();
+        }
+
+        $resetRecon = $conn->prepare("UPDATE budget.recon SET reconStatus = FALSE WHERE reconDate > ?");
+        $resetRecon->bind_param("s", $resetDate);
+        $resetRecon->execute();
+
+    }
+
+
+    changeSnackCategory($conn);
 
 
 

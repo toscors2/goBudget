@@ -1,9 +1,8 @@
 <?php
     include('../cfg/connect.php');
 
-    $tenderQRY = "SELECT tenderName, tenderCode, balance FROM budget.tender";
 
-    $tenderSQL = $conn->prepare($tenderQRY);
+    $tenderSQL = $conn->prepare("SELECT tenderName, tenderCode, balance FROM budget.tender");
     $tenderSQL->execute();
     $tenderSQL->store_result();
     $tenderSQL->bind_result($tenderName, $tenderCode, $balance);

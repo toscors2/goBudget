@@ -17,9 +17,9 @@
 <li><a id='payTransLnk' href='#payTrans'>Pay</a></li>
 <li><a id='editTransLnk' href='#editTrans'>Edit</a></li>
 </ul>
-<div id='addTrans' class='tabContent'>Loading Form</div>
-<div id='payTrans' class='tabContent'>Feature Coming Soon</div>
-<div id='newTrans' class='tabContent'>Loading TransActions</div>
+<div id='addTrans' class='tabContent'>Loading</div>
+<div id='payTrans' class='tabContent'>Getting Transactions</div>
+<div id='newTrans' class='tabContent'>Finding New TransActions</div>
 <div id='editTrans' class='tabContent'>Feature Coming Soon</div>
 </div>
 
